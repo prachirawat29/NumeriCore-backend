@@ -10,11 +10,12 @@ WORKDIR /src
 COPY CMakeLists.txt .
 COPY include/ include/
 COPY src/ src/
+COPY third_party/ third_party/
 
 RUN cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF \
     && cmake --build build
 
-# Runtime stage: just the binary + C++ runtime.
+# Runtime stage: just the binaries + C++ runtime.
 FROM debian:bookworm-slim AS runtime
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -22,7 +23,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /src/build/numericore /usr/local/bin/numericore
+COPY --from=build /src/build/numericore_server /usr/local/bin/numericore_server
 
-# Reads a JSON request on stdin, writes the JSON response on stdout.
-#   docker run --rm -i numericore < data/sample_input.json
-ENTRYPOINT ["numericore"]
+# HTTP server: listens on $PORT (default 8080), POST /api/calculate.
+# The stdin/stdout CLI is still available as `numericore`.
+EXPOSE 8080
+ENTRYPOINT ["numericore_server"]

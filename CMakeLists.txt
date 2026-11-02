@@ -25,6 +25,18 @@ target_link_libraries(numericore_core PUBLIC nlohmann_json::nlohmann_json)
 add_executable(numericore src/main.cpp)
 target_link_libraries(numericore PRIVATE numericore_core)
 
+# HTTP server for hosted deployment (uses the single-header cpp-httplib).
+option(BUILD_SERVER "Build the HTTP server" ON)
+if(BUILD_SERVER)
+    find_package(Threads REQUIRED)
+    add_executable(numericore_server src/server.cpp)
+    target_include_directories(numericore_server PRIVATE third_party)
+    target_link_libraries(numericore_server PRIVATE numericore_core Threads::Threads)
+    if(WIN32)
+        target_link_libraries(numericore_server PRIVATE ws2_32)
+    endif()
+endif()
+
 option(BUILD_TESTING "Build the unit tests" ON)
 if(BUILD_TESTING)
     enable_testing()
