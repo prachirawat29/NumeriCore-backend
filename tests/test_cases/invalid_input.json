@@ -1,0 +1,8 @@
+{
+    "operation": "calculate_area",
+    "start": 0,
+    "end": 3,
+    "x_values": [0, 1, 2, 3],
+    "y_values": [0, 1, 4, 9],
+    "midpoint_values": [0.5, 2.5, 6.5]
+}

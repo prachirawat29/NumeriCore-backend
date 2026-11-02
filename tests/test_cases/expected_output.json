@@ -1,0 +1,29 @@
+{
+    "data": {
+        "actual_value": 21.3333333333333,
+        "comparison_available": true,
+        "most_accurate_methods": [
+            "simpson"
+        ],
+        "results": {
+            "midpoint": {
+                "absolute_error": 0.3333333333333002,
+                "estimated_value": 21.0,
+                "percentage_error": 1.562499999999847
+            },
+            "simpson": {
+                "absolute_error": 3.197442310920451e-14,
+                "estimated_value": 21.333333333333332,
+                "percentage_error": 1.4988010832439636e-13
+            },
+            "trapezoidal": {
+                "absolute_error": 0.6666666666666998,
+                "estimated_value": 22.0,
+                "percentage_error": 3.1250000000001603
+            }
+        },
+        "step_size": 1.0
+    },
+    "error": null,
+    "success": true
+}
